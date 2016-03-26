@@ -1,46 +1,100 @@
-ï»¿//æå¦ 2015.3.4
-//å››åˆ™è¿ç®— 
+//Àîåû 2015.3.12
+//ËÄÔòÔËËãĞÂ 
 #include<iostream>
-#include<string>
+#include<fstream> 
+#include<iomanip>
+#include<cmath>  
+#include<string>  
+#include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
 using namespace std;
+#define random() (rand()%1000) 
+
+ //ÊÇ·ñÓĞ³Ë³ı·¨
+char operator_random(int c1)
+{
+    char o;
+	int c,c2;
+	if(c1==0)
+	{
+		c2=2;
+	}
+	if(c1==1)
+	{
+		c2=4;
+	}
+    c= (rand() % 100)%c2;
+    if (c == 0) o = '+';
+    else if (c == 1) o = '-';
+    else if (c == 2) o = '*';
+    else o = '/';
+    return o;
+}
+
 void main()
 {
-	srand((unsigned)time(NULL));//è®¾ç½®æ—¶é—´ç§å­ ï¼Œä»¥ä½¿ç¨‹åºæ¯æ¬¡å¾—åˆ°çš„ç»“æœéƒ½ä¸åŒ 
-	for (int i = 0; i < 30; i++)
+    srand((unsigned)time(NULL));//ÉèÖÃÊ±¼äÖÖ×Ó £¬ÒÔÊ¹³ÌĞòÃ¿´ÎµÃµ½µÄ½á¹û¶¼²»Í¬ 
+	int c1,number,output_mode,value_range,num_1,num_2,plus_or_minus,yushu,j,x,kuohao;
+	char o;
+	cout<<"ÊÇ·ñÓĞ³Ë³ı·¨£¿0·ñ , 1ÊÇ£º"<<endl;
+	cin>>c1;
+	cout<<"ÌâÄ¿ÈçºÎÊä³ö£¿0ÔÚÎÄ¼şÖĞÊä³ö £¬1ÔÚ´ËÖ±½ÓÊä³ö£º"<<endl;
+	cin>>output_mode;
+	cout<<"ÇëÊäÈëÊıÖµ·¶Î§£º"<<endl;
+	cin>>value_range;
+	cout<<"ÓĞÎŞÀ¨ºÅ£¿0Ã»ÓĞ£¬1ÓĞ"<<endl;
+	cin>>kuohao;
+	cout<<"¼Ó¼õÓĞÎŞ¸ºÊı£¿0Ã»ÓĞ£¬1ÓĞ£º"<<endl;
+	cin>>plus_or_minus;
+	cout<<"³ı·¨ÓĞÎŞÓàÊı£¿0Ã»ÓĞ£¬1ÓĞ£º"<<endl;
+	cin>>yushu;
+	cout<<"ÇëÊäÈëÌâÄ¿µÄÊıÁ¿£º"<<endl;
+	cin>>number;
+	ofstream fout;
+	if(output_mode==0)
 	{
-		int a, b, c;
-		int fenmu_1, fenmu_2;
-		//ç”Ÿæˆç¬¬ä¸€ä¸ªæ“ä½œæ•°
-		a = (rand() % (100)) + 1;
-		if (a == 100)
-		{
-			a = (rand() % 99) + 1;
-			fenmu_1 = a + (rand() % (99 - a + 1));
-			cout << "(" << a << "/" << fenmu_1 << ")";
-		}
-		else cout << a;
-
-		//éšæœºç”Ÿæˆè¿ç®—ç¬¦
-		char o;
-		c = (rand() % 100) % 4;
-		if (c == 0) o = '+';
-		else if (c == 1) o = '-';
-		else if (c == 2) o = '*';
-		else o = '/';
-		cout << o;
-		//ç”Ÿæˆç¬¬äºŒä¸ªæ“ä½œæ•°
-		b = 1 + rand() % (100);
-		if (b == 100)
-		{
-			b = (rand() % 99) + 1;
-			fenmu_2 = b + (rand() % (99 - b + 1));
-			cout << "(" << b << "/" << fenmu_2 << ")";
-		}
-		else cout << b;
-		cout << "=";
-		cout << endl;
+		fout.open("yunsuan.txt");
+		fout<<number<<"µÀËæ»úËÄÔòÔËËã£º"<<endl;
 	}
+	else
+	{
+		cout<<number<<"µÀËæ»úËÄÔòÔËËã£º"<<endl;
+	}
+    for (int i = 0; i < number; i++)
+    {
+       num_1=random()%value_range+1;
+	   num_2=random()%value_range+1;
+	   o=operator_random(c1);
+	   int j=num_1-num_2;
+	   int x=num_1%num_2;
 
-}
+	   if(output_mode==0)
+	   {
+		   if(((j<0)&&(plus_or_minus==0))||((j>=0)&&(plus_or_minus==1))||((x!=0)&&(yushu==0))||((x==0)&&(yushu==1)))
+		   {
+			   i--;
+		   }
+		   else
+		   {
+		      fout<<num_1<<o<<num_2<<"="<<endl; 
+		   }
+	   }
+	   else
+	   {
+		    if(((j<0)&&(plus_or_minus==0))||((j>=0)&&(plus_or_minus==1))||((x!=0)&&(yushu==0))||((x==0)&&(yushu==1)))
+		   {
+			   i--;
+		   }
+		   else 
+		   {
+			   cout<<num_1<<o<<num_2<<"="<<endl;	
+		    }
+	   }
+    }
+	if(output_mode==1) 
+	{
+		fout.close();
+	}
+} 
+
